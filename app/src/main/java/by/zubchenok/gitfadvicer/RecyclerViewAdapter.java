@@ -1,5 +1,6 @@
 package by.zubchenok.gitfadvicer;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,8 +42,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(GiftViewHolder holder, int position) {
+        Context context = holder.image.getContext();
+        int imageId = context.getResources().getIdentifier(gifts.get(position).getImageId(),
+                "drawable",context.getPackageName());
         holder.name.setText(gifts.get(position).getName());
-        holder.image.setImageResource(gifts.get(position).getImageId());
+        holder.image.setImageResource(imageId);
     }
 
     @Override

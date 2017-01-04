@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gitf Advicer</string>
+    <string name="app_name">Gift Adviser</string>
 
     <string-array name="holidays">
         <item>День рождения</item>
@@ -7,5 +7,7 @@
         <item>Свадьба</item>
         <item>8 марта</item>
         <item>23 февраля</item>
+        <item>День Святого Валнтина</item>
+        <item>Без повода</item>
     </string-array>
 </resources>

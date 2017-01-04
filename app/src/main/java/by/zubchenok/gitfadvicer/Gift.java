@@ -3,62 +3,153 @@ package by.zubchenok.gitfadvicer;
 public class Gift {
     private String name;
     private String holiday;
-    private String sex;
-    private String age;
-    private String price;
-    private int imageId;
+    // 0 - female, 1 - male, -1 - any sex
+    private int sex;
+    private int ageMin;
+    private int ageMax;
+    private int age;
+    private int priceMin;
+    private int priceMax;
+    private String imageId;
 
-    public Gift(String name, String price, int imageId) {
-        this.name = name;
-        this.price = price;
-        this.imageId = imageId;
+    private int reasonAny;
+    private int reasonBirthday;
+    private int reasonNewYear;
+    private int reasonWedding;
+    private int reason8Mar;
+    private int reason23Feb;
+    private int reasonValentinesDay;
+
+    public Gift() {
     }
 
     public String getName() {
         return name;
     }
 
-    public String getHoliday() {
-        return holiday;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public int getImageId() {
-        return imageId;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getHoliday() {
+        return holiday;
     }
 
     public void setHoliday(String holiday) {
         this.holiday = holiday;
     }
 
-    public void setSex(String sex) {
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public int getAgeMin() {
+        return ageMin;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setAgeMin(int ageMin) {
+        this.ageMin = ageMin;
     }
 
-    public void setImageId(int imageId) {
+    public int getAgeMax() {
+        return ageMax;
+    }
+
+    public void setAgeMax(int ageMax) {
+        this.ageMax = ageMax;
+    }
+
+    public int getPriceMin() {
+        return priceMin;
+    }
+
+    public void setPriceMin(int priceMin) {
+        this.priceMin = priceMin;
+    }
+
+    public int getPriceMax() {
+        return priceMax;
+    }
+
+    public void setPriceMax(int priceMax) {
+        this.priceMax = priceMax;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
         this.imageId = imageId;
     }
+
+    public int getReasonAny() {
+        return reasonAny;
+    }
+
+    public void setReasonAny(int reasonAny) {
+        this.reasonAny = reasonAny;
+    }
+
+    public int getReasonBirthday() {
+        return reasonBirthday;
+    }
+
+    public void setReasonBirthday(int reasonBirthday) {
+        this.reasonBirthday = reasonBirthday;
+    }
+
+    public int getReasonNewYear() {
+        return reasonNewYear;
+    }
+
+    public void setReasonNewYear(int reasonNewYear) {
+        this.reasonNewYear = reasonNewYear;
+    }
+
+    public int getReasonWedding() {
+        return reasonWedding;
+    }
+
+    public void setReasonWedding(int reasonWedding) {
+        this.reasonWedding = reasonWedding;
+    }
+
+    public int getReason8Mar() {
+        return reason8Mar;
+    }
+
+    public void setReason8Mar(int reason8Mar) {
+        this.reason8Mar = reason8Mar;
+    }
+
+    public int getReason23Feb() {
+        return reason23Feb;
+    }
+
+    public void setReason23Feb(int reason23Feb) {
+        this.reason23Feb = reason23Feb;
+    }
+
+    public int getReasonValentinesDay() {
+        return reasonValentinesDay;
+    }
+
+    public void setReasonValentinesDay(int reasonValentinesDay) {
+        this.reasonValentinesDay = reasonValentinesDay;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 }
+
+
