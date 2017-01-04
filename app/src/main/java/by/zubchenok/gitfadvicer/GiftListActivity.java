@@ -10,8 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import by.zubchenok.gitfadvicer.data.Gift;
+import by.zubchenok.gitfadvicer.data.GiftDbHelper;
+
 public class GiftListActivity extends AppCompatActivity {
-    private GiftDatabaseHelper mDBHelper;
+    private GiftDbHelper mDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +22,7 @@ public class GiftListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gift_list);
 
         //Database
-        mDBHelper = new GiftDatabaseHelper(this);
+        mDBHelper = new GiftDbHelper(this);
         if (mDBHelper.isGiftDatabaseEmpty()) {
             mDBHelper.addGiftsToDatabase(createTestGifts());
         }

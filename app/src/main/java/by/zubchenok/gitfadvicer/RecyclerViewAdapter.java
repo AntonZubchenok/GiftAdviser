@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import by.zubchenok.gitfadvicer.data.Gift;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.GiftViewHolder> {
 
     public static class GiftViewHolder extends RecyclerView.ViewHolder {

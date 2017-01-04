@@ -1,4 +1,4 @@
-package by.zubchenok.gitfadvicer;
+package by.zubchenok.gitfadvicer.data;
 
 public class Gift {
     private String name;
