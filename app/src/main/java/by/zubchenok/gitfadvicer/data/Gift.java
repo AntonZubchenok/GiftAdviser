@@ -1,6 +1,9 @@
 package by.zubchenok.gitfadvicer.data;
 
-public class Gift {
+import java.io.Serializable;
+
+public class Gift implements Serializable{
+    int Id;
     private String name;
     private String holiday;
     // 0 - female, 1 - male, -1 - any sex
@@ -21,6 +24,14 @@ public class Gift {
     private int reasonValentinesDay;
 
     public Gift() {
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 
     public String getName() {

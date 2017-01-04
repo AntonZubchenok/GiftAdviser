@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="by.zubchenok.gitfadvicer.ItemActivity">
+
+
+    <ImageView
+        android:id="@+id/iv_item_image"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_alignParentTop="true"
+        android:elevation="6dp"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/book"/>
+
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/iv_item_image"
+        android:layout_margin="16dp"
+        tools:text="Пол: мужской"
+        />
+
+    <TextView
+        android:id="@+id/tv_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_sex"
+        android:layout_margin="16dp"
+        tools:text="Минимальный возраст"
+        />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_age"
+        android:layout_margin="16dp"
+        tools:text="Минимальный возраст"
+        />
+
+    <TextView
+        android:id="@+id/tv_reasons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_price"
+        android:layout_margin="16dp"
+        tools:text="Минимальный возраст"
+        />
+
+</RelativeLayout>

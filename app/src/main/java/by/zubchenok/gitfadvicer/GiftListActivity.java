@@ -66,9 +66,8 @@ public class GiftListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(gifts);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,gifts);
         recyclerView.setAdapter(adapter);
-
     }
 
     private Gift createGiftObjectFromIntent(Intent intent){
@@ -108,4 +107,5 @@ public class GiftListActivity extends AppCompatActivity {
 
         return gift;
     }
+
 }

@@ -127,6 +127,7 @@ public class GiftDbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Gift gift = new Gift();
+                gift.setId(cursor.getInt(0));
                 gift.setName(cursor.getString(1));
                 gift.setSex(cursor.getInt(2));
                 gift.setAgeMin(cursor.getInt(3));
@@ -134,6 +135,13 @@ public class GiftDbHelper extends SQLiteOpenHelper {
                 gift.setPriceMin(cursor.getInt(5));
                 gift.setPriceMax(cursor.getInt(6));
                 gift.setImageId(cursor.getString(7));
+                gift.setReasonAny(cursor.getInt(8));
+                gift.setReasonBirthday(cursor.getInt(9));
+                gift.setReasonNewYear(cursor.getInt(10));
+                gift.setReasonWedding(cursor.getInt(11));
+                gift.setReason8Mar(cursor.getInt(12));
+                gift.setReason23Feb(cursor.getInt(13));
+                gift.setReasonValentinesDay(cursor.getInt(14));
                 giftsList.add(gift);
             } while (cursor.moveToNext());
         }

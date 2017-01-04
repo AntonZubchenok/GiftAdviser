@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".GiftListActivity">
         </activity>
+        <activity android:name=".ItemActivity">
+        </activity>
     </application>
 
 </manifest>
