@@ -32,9 +32,11 @@ public class GiftDbHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "pets.db";
     public static final int DATABASE_VERSION = 1;
+    private Context mContext;
 
     public GiftDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
     }
 
     @Override
@@ -88,23 +90,28 @@ public class GiftDbHelper extends SQLiteOpenHelper {
     }
 
     public List<Gift> getGiftsFromDatabase(Gift giftToFind) {
-        String reasonColumn = "";
+        StringBuilder reasonRequest = new StringBuilder("reason_any=1");
         String sex;
         String age;
         String priceMax;
 
         if (giftToFind.getReasonBirthday() == 1) {
-            reasonColumn = COLUMN_REASON_BIRTHDAY;
-        } else if (giftToFind.getReasonNewYear() == 1) {
-            reasonColumn = COLUMN_REASON_NEW_YEAR;
-        } else if (giftToFind.getReason8Mar() == 1) {
-            reasonColumn = COLUMN_REASON_8_MAR;
-        } else if (giftToFind.getReason23Feb() == 1) {
-            reasonColumn = COLUMN_REASON_23_FEB;
-        } else if (giftToFind.getReasonValentinesDay() == 1) {
-            reasonColumn = COLUMN_REASON_VALENTINES_DAY;
-        } else if (giftToFind.getReasonWedding() == 1) {
-            reasonColumn = COLUMN_REASON_WEDDING;
+            reasonRequest.append(" OR " + COLUMN_REASON_BIRTHDAY + "=1");
+        }
+        if (giftToFind.getReasonNewYear() == 1) {
+            reasonRequest.append(" OR " + COLUMN_REASON_NEW_YEAR + "=1");
+        }
+        if (giftToFind.getReason8Mar() == 1) {
+            reasonRequest.append(" OR " + COLUMN_REASON_8_MAR + "=1");
+        }
+        if (giftToFind.getReason23Feb() == 1) {
+            reasonRequest.append(" OR " + COLUMN_REASON_23_FEB + "=1");
+        }
+        if (giftToFind.getReasonValentinesDay() == 1) {
+            reasonRequest.append(" OR " + COLUMN_REASON_VALENTINES_DAY + "=1");
+        }
+        if (giftToFind.getReasonWedding() == 1) {
+            reasonRequest.append(" OR " + COLUMN_REASON_WEDDING + "=1");
         }
 
         sex = String.valueOf(giftToFind.getSex());
@@ -113,40 +120,42 @@ public class GiftDbHelper extends SQLiteOpenHelper {
 
 
         List<Gift> giftsList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_NAME, null,
-                "(" + COLUMN_SEX + "=? OR " + COLUMN_SEX + "=-1) AND " +
+        String selection = "(" + COLUMN_SEX + "=? OR " + COLUMN_SEX + "=-1) AND " +
                         COLUMN_AGE_MAX + ">=? AND " +
                         COLUMN_AGE_MIN + "<=? AND " +
                         COLUMN_PRICE_MAX + "<=? AND " +
-                        "(" + reasonColumn + "=1 OR " + COLUMN_REASON_ANY + "=1)",
-                new String[]{sex, age, age, priceMax},
-                null, null, null);
+                        "(" + reasonRequest + ")";
+        String[] selectionArgs = new String[]{sex, age, age, priceMax};
 
-        if (cursor.moveToFirst()) {
-            do {
-                Gift gift = new Gift();
-                gift.setId(cursor.getInt(0));
-                gift.setName(cursor.getString(1));
-                gift.setSex(cursor.getInt(2));
-                gift.setAgeMin(cursor.getInt(3));
-                gift.setAgeMax(cursor.getInt(4));
-                gift.setPriceMin(cursor.getInt(5));
-                gift.setPriceMax(cursor.getInt(6));
-                gift.setImageId(cursor.getString(7));
-                gift.setReasonAny(cursor.getInt(8));
-                gift.setReasonBirthday(cursor.getInt(9));
-                gift.setReasonNewYear(cursor.getInt(10));
-                gift.setReasonWedding(cursor.getInt(11));
-                gift.setReason8Mar(cursor.getInt(12));
-                gift.setReason23Feb(cursor.getInt(13));
-                gift.setReasonValentinesDay(cursor.getInt(14));
-                giftsList.add(gift);
-            } while (cursor.moveToNext());
+        Cursor cursor = mContext.getContentResolver().query(GiftContract.GiftEntry.CONTENT_URI,
+                null, selection,selectionArgs,null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Gift gift = new Gift();
+                    gift.setId(cursor.getInt(0));
+                    gift.setName(cursor.getString(1));
+                    gift.setSex(cursor.getInt(2));
+                    gift.setAgeMin(cursor.getInt(3));
+                    gift.setAgeMax(cursor.getInt(4));
+                    gift.setPriceMin(cursor.getInt(5));
+                    gift.setPriceMax(cursor.getInt(6));
+                    gift.setImageId(cursor.getString(7));
+                    gift.setReasonAny(cursor.getInt(8));
+                    gift.setReasonBirthday(cursor.getInt(9));
+                    gift.setReasonNewYear(cursor.getInt(10));
+                    gift.setReasonWedding(cursor.getInt(11));
+                    gift.setReason8Mar(cursor.getInt(12));
+                    gift.setReason23Feb(cursor.getInt(13));
+                    gift.setReasonValentinesDay(cursor.getInt(14));
+                    giftsList.add(gift);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            cursor.close();
         }
-        cursor.close();
-        db.close();
         return giftsList;
     }
 

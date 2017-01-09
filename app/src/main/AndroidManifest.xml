@@ -19,6 +19,10 @@
         </activity>
         <activity android:name=".ItemActivity">
         </activity>
+        <provider
+            android:name=".data.GiftProvider"
+            android:authorities="by.zubchenok.gitfadvicer.data.gifts"
+            android:exported="false" />
     </application>
 
 </manifest>

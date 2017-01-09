@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class GiftListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gift_list);
 
+
         //Database
         mDBHelper = new GiftDbHelper(this);
         if (mDBHelper.isGiftDatabaseEmpty()) {
@@ -31,7 +34,15 @@ public class GiftListActivity extends AppCompatActivity {
         if (intent != null) {
             Gift giftToFind = createGiftObjectFromIntent(intent);
             List<Gift> gifts = mDBHelper.getGiftsFromDatabase(giftToFind);
-            showGiftsList(gifts);
+
+            if (gifts.isEmpty()){
+                TextView textView = new TextView(this);
+                textView.setText("Подходящих подарков не найдено");
+                RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_gift_list);
+                layout.addView(textView);
+            } else {
+                showGiftsList(gifts);
+            }
         }
     }
 

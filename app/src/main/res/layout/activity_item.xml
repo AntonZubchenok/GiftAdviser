@@ -25,7 +25,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/iv_item_image"
         android:layout_margin="16dp"
-        tools:text="Пол: мужской"
+        tools:text="Пол"
         />
 
     <TextView
@@ -36,7 +36,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv_sex"
         android:layout_margin="16dp"
-        tools:text="Минимальный возраст"
+        tools:text="Возраст"
         />
 
     <TextView
@@ -47,7 +47,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv_age"
         android:layout_margin="16dp"
-        tools:text="Минимальный возраст"
+        tools:text="Стоимость"
         />
 
     <TextView
@@ -58,7 +58,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv_price"
         android:layout_margin="16dp"
-        tools:text="Минимальный возраст"
+        tools:text="Поводы"
         />
 
 </RelativeLayout>
