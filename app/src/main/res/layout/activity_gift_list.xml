@@ -5,7 +5,7 @@
     android:id="@+id/activity_gift_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5E5E5"
+    android:background="#CFD8DC"
     tools:context="by.zubchenok.gitfadvicer.GiftListActivity">
 
     <android.support.v7.widget.RecyclerView

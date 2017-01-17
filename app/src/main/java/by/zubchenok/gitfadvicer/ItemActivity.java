@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import by.zubchenok.gitfadvicer.data.Gift;
+import by.zubchenok.gitfadvicer.data.GiftCursorRecyclerViewAdapter;
 
 public class ItemActivity extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class ItemActivity extends AppCompatActivity {
         TextView textViewAge = (TextView) findViewById(R.id.tv_age);
         TextView textViewPrice = (TextView) findViewById(R.id.tv_price);
         TextView textViewReasons = (TextView) findViewById(R.id.tv_reasons);
-        Gift gift = (Gift) getIntent().getSerializableExtra(RecyclerViewAdapter.GIFT_EXTRA);
+        Gift gift = (Gift) getIntent().getSerializableExtra(GiftCursorRecyclerViewAdapter.GIFT_EXTRA);
 
         int imageId = this.getResources().getIdentifier(gift.getImageId(), "drawable", this.getPackageName());
         imageView.setImageResource(imageId);

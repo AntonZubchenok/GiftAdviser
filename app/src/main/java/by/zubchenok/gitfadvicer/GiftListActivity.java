@@ -1,6 +1,9 @@
 package by.zubchenok.gitfadvicer;
 
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,9 +16,14 @@ import java.util.List;
 import java.util.Random;
 
 import by.zubchenok.gitfadvicer.data.Gift;
+import by.zubchenok.gitfadvicer.data.GiftContract;
+import by.zubchenok.gitfadvicer.data.GiftCursorRecyclerViewAdapter;
 import by.zubchenok.gitfadvicer.data.GiftDbHelper;
 
-public class GiftListActivity extends AppCompatActivity {
+public class GiftListActivity extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<Cursor> {
+    public static final int GIFT_LOADER_ID = 1;
+    GiftCursorRecyclerViewAdapter mAdapter;
+
     private GiftDbHelper mDBHelper;
 
     @Override
@@ -23,27 +31,11 @@ public class GiftListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gift_list);
 
-
-        //Database
-        mDBHelper = new GiftDbHelper(this);
-        if (mDBHelper.isGiftDatabaseEmpty()) {
-            mDBHelper.addGiftsToDatabase(createTestGifts());
-        }
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            Gift giftToFind = createGiftObjectFromIntent(intent);
-            List<Gift> gifts = mDBHelper.getGiftsFromDatabase(giftToFind);
-
-            if (gifts.isEmpty()){
-                TextView textView = new TextView(this);
-                textView.setText("Подходящих подарков не найдено");
-                RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_gift_list);
-                layout.addView(textView);
-            } else {
-                showGiftsList(gifts);
-            }
-        }
+        mAdapter = new GiftCursorRecyclerViewAdapter(this);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
+        recyclerView.setAdapter(mAdapter);
+        //TODO Подумать над тем где должен запускаться лодер - в MainActivity или в GiftListActivity
+        this.getLoaderManager().restartLoader(GIFT_LOADER_ID, null, this);
     }
 
     private List<Gift> createTestGifts() {
@@ -51,7 +43,7 @@ public class GiftListActivity extends AppCompatActivity {
         List<Gift> gifts = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             Gift gift = new Gift();
-            gift.setName("Подарок №" + (i+1));
+            gift.setName("Подарок №" + (i + 1));
             gift.setSex(-1 + new Random().nextInt(3));
             int ageMin = 10 + new Random().nextInt(15);
             gift.setAgeMin(ageMin);
@@ -77,30 +69,37 @@ public class GiftListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,gifts);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, gifts);
         recyclerView.setAdapter(adapter);
     }
 
-    private Gift createGiftObjectFromIntent(Intent intent){
+    private Gift createGiftObjectFromIntent(Intent intent) {
         Gift gift = new Gift();
 
         //Reason
         int reasonPosition = intent.getIntExtra(MainActivity.REASON_POSITION, -1);
 
         switch (reasonPosition) {
-            case 0: gift.setReasonBirthday(1);
+            case 0:
+                gift.setReasonBirthday(1);
                 break;
-            case 1: gift.setReasonNewYear(1);
+            case 1:
+                gift.setReasonNewYear(1);
                 break;
-            case 2: gift.setReasonWedding(1);
+            case 2:
+                gift.setReasonWedding(1);
                 break;
-            case 3: gift.setReason8Mar(1);
+            case 3:
+                gift.setReason8Mar(1);
                 break;
-            case 4: gift.setReason23Feb(1);
+            case 4:
+                gift.setReason23Feb(1);
                 break;
-            case 5: gift.setReasonValentinesDay(1);
+            case 5:
+                gift.setReasonValentinesDay(1);
                 break;
-            case 6: gift.setReasonAny(1);
+            case 6:
+                gift.setReasonAny(1);
                 break;
         }
 
@@ -113,10 +112,59 @@ public class GiftListActivity extends AppCompatActivity {
         gift.setAge(age);
 
         //Price
-        int maxPrice = intent.getIntExtra(MainActivity.MAX_PRICE,-1);
+        int maxPrice = intent.getIntExtra(MainActivity.MAX_PRICE, -1);
         gift.setPriceMax(maxPrice);
 
         return gift;
     }
 
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+
+            case GIFT_LOADER_ID:
+                //TODO Сделать так, чтобы обращение к БД происходило через ContentResolver
+                mDBHelper = new GiftDbHelper(this);
+                if (mDBHelper.isGiftDatabaseEmpty()) {
+                    mDBHelper.addGiftsToDatabase(createTestGifts());
+                }
+
+                Intent intent = getIntent();
+                if (intent != null) {
+                    Gift giftToFind = createGiftObjectFromIntent(intent);
+                    List<Gift> gifts = mDBHelper.getGiftsFromDatabase(giftToFind);
+                    //TODO Сделать нормальное отображение сообщения "Подходящих подарков не найдено"
+                    if (gifts.isEmpty()) {
+                        TextView textView = new TextView(this);
+                        textView.setText("Подходящих подарков не найдено");
+                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_gift_list);
+                        layout.addView(textView);
+                    } else {
+                        showGiftsList(gifts);
+                    }
+                }
+
+                return new CursorLoader(this, GiftContract.GiftEntry.CONTENT_URI, null, null, null, null);
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        switch (loader.getId()) {
+            case GIFT_LOADER_ID:
+                this.mAdapter.swapCursor(data);
+                break;
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        switch (loader.getId()) {
+            case GIFT_LOADER_ID:
+                this.mAdapter.swapCursor(null);
+                break;
+        }
+    }
 }
