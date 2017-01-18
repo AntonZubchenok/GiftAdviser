@@ -1,32 +1,73 @@
 package by.zubchenok.gitfadvicer;
 
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import by.zubchenok.gitfadvicer.data.Gift;
-import by.zubchenok.gitfadvicer.data.GiftCursorRecyclerViewAdapter;
+import by.zubchenok.gitfadvicer.data.GiftContract;
 
-public class ItemActivity extends AppCompatActivity {
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_AGE_MAX;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_AGE_MIN;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_IMAGE;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_PRICE_MAX;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_PRICE_MIN;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_23_FEB;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_8_MAR;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_ANY;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_BIRTHDAY;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_NEW_YEAR;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_VALENTINES_DAY;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_WEDDING;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_SEX;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.CONTENT_URI;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry._ID;
+
+public class ItemActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
+
+
+        int giftId = getIntent().getIntExtra(GiftContract.GiftEntry._ID, -1);
+        Bundle bundle = new Bundle(1);
+        bundle.putInt(GiftContract.GiftEntry._ID, giftId);
+
+        getLoaderManager().restartLoader(0, bundle, this);
+
+
+
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String selection = "(" + _ID + "=?)";
+        String[] selectionArgs = {String.valueOf(args.getInt(_ID))};
+        return new CursorLoader(this, CONTENT_URI, null, selection, selectionArgs, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         ImageView imageView = (ImageView) findViewById(R.id.iv_item_image);
         TextView textViewSex = (TextView) findViewById(R.id.tv_sex);
         TextView textViewAge = (TextView) findViewById(R.id.tv_age);
         TextView textViewPrice = (TextView) findViewById(R.id.tv_price);
         TextView textViewReasons = (TextView) findViewById(R.id.tv_reasons);
-        Gift gift = (Gift) getIntent().getSerializableExtra(GiftCursorRecyclerViewAdapter.GIFT_EXTRA);
 
-        int imageId = this.getResources().getIdentifier(gift.getImageId(), "drawable", this.getPackageName());
+        data.moveToFirst();
+        String image = data.getString(data.getColumnIndex(COLUMN_IMAGE));
+        int imageId = this.getResources().getIdentifier(image, "drawable", this.getPackageName());
         imageView.setImageResource(imageId);
 
         String sex = "";
-        switch (gift.getSex()) {
+        switch (data.getInt(data.getColumnIndex(COLUMN_SEX))) {
             case 0:
                 sex = "женский";
                 break;
@@ -39,42 +80,44 @@ public class ItemActivity extends AppCompatActivity {
         }
         textViewSex.setText("Пол: " + sex);
 
-        textViewAge.setText("Возраст: " + gift.getAgeMin() + "-" + gift.getAgeMax() + " лет");
-        textViewPrice.setText("Стоимость: " + gift.getPriceMin() + "-" + gift.getPriceMax() + " BYN");
+        textViewAge.setText("Возраст: " + data.getInt(data.getColumnIndex(COLUMN_AGE_MIN)) + "-" +
+                data.getInt(data.getColumnIndex(COLUMN_AGE_MAX)) + " лет");
+        textViewPrice.setText("Стоимость: " + data.getInt(data.getColumnIndex(COLUMN_PRICE_MIN)) + "-" +
+                data.getInt(data.getColumnIndex(COLUMN_PRICE_MAX)) + " BYN");
 
         String reasons = "";
 
-        if (gift.getReasonAny() == 1) {
+        if (data.getInt(data.getColumnIndex(COLUMN_REASON_ANY)) == 1) {
             reasons = "любой";
         } else {
-            if (gift.getReason23Feb() == 1) {
+            if (data.getInt(data.getColumnIndex(COLUMN_REASON_23_FEB)) == 1) {
                 reasons += "23 февраля";
             }
-            if (gift.getReason8Mar() == 1) {
+            if (data.getInt(data.getColumnIndex(COLUMN_REASON_8_MAR)) == 1) {
                 if (!reasons.isEmpty()) {
                     reasons += ", ";
                 }
                 reasons += "8 марта";
             }
-            if (gift.getReasonBirthday() == 1) {
+            if (data.getInt(data.getColumnIndex(COLUMN_REASON_BIRTHDAY)) == 1) {
                 if (!reasons.isEmpty()) {
                     reasons += ", ";
                 }
                 reasons += "день рождения";
             }
-            if (gift.getReasonNewYear() == 1) {
+            if (data.getInt(data.getColumnIndex(COLUMN_REASON_NEW_YEAR)) == 1) {
                 if (!reasons.isEmpty()) {
                     reasons += ", ";
                 }
                 reasons += "Новый Год";
             }
-            if (gift.getReasonValentinesDay() == 1) {
+            if (data.getInt(data.getColumnIndex(COLUMN_REASON_VALENTINES_DAY)) == 1) {
                 if (!reasons.isEmpty()) {
                     reasons += ", ";
                 }
                 reasons += "день Святого Валентина";
             }
-            if (gift.getReasonWedding() == 1) {
+            if (data.getInt(data.getColumnIndex(COLUMN_REASON_WEDDING)) == 1) {
                 if (!reasons.isEmpty()) {
                     reasons += ", ";
                 }
@@ -82,5 +125,10 @@ public class ItemActivity extends AppCompatActivity {
             }
         }
         textViewReasons.setText("Повод: " + reasons);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

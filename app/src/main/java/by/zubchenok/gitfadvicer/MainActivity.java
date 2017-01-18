@@ -15,9 +15,17 @@ import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.SEX_MALE;
 
 public class MainActivity extends AppCompatActivity {
     public static final String SEX = "sex";
-    public static final String REASON_POSITION = "reason_position";
+    public static final String REASON_SPINNER_POSITION = "reason spinner position";
     public static final String AGE = "age";
-    public static final String MAX_PRICE = "max_price";
+    public static final String MAX_PRICE = "max price";
+
+    public static final int SPINNER_POSITION_BIRTHDAY = 0;
+    public static final int SPINNER_POSITION_NEW_YEAR = 1;
+    public static final int SPINNER_POSITION_WEDDING = 2;
+    public static final int SPINNER_POSITION_8_MAR = 3;
+    public static final int SPINNER_POSITION_23_FEB = 4;
+    public static final int SPINNER_POSITION_VALENTINES_DAY = 5;
+    public static final int SPINNER_POSITION_ANY_REASON = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //Reason
                 final Spinner reasonSpinner = (Spinner) findViewById(R.id.spinner_holidays);
-                int reasonPosition = reasonSpinner.getSelectedItemPosition();
+                int reasonSpinnerPosition = reasonSpinner.getSelectedItemPosition();
 
                 //Sex
                 final RadioGroup sexGroup = (RadioGroup) findViewById(R.id.radioGroup);
@@ -52,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 int maxPrice = Integer.valueOf(maxPriceEditText.getText().toString());
 
                 Intent intent = new Intent(MainActivity.this, GiftListActivity.class);
-                intent.putExtra(REASON_POSITION, reasonPosition);
+                intent.putExtra(REASON_SPINNER_POSITION, reasonSpinnerPosition);
                 intent.putExtra(SEX, sex);
                 intent.putExtra(AGE, age);
                 intent.putExtra(MAX_PRICE, maxPrice);
