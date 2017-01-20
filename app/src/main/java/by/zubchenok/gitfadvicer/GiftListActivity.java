@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import by.zubchenok.gitfadvicer.data.GiftContract;
 import by.zubchenok.gitfadvicer.data.GiftCursorRecyclerViewAdapter;
@@ -51,8 +50,6 @@ public class GiftListActivity extends AppCompatActivity implements android.app.L
 
         mAdapter = new GiftCursorRecyclerViewAdapter(this, this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
-        recyclerView.setVisibility(View.GONE);
-
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
