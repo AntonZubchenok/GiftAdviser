@@ -8,6 +8,7 @@
     tools:context="by.zubchenok.gitfadvicer.ItemActivity">
 
 
+
     <ImageView
         android:id="@+id/iv_item_image"
         android:layout_width="match_parent"
@@ -18,12 +19,23 @@
         tools:src="@drawable/book"/>
 
     <TextView
-        android:id="@+id/tv_sex"
+        android:id="@+id/tv_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/iv_item_image"
+        android:layout_margin="16dp"
+        tools:text="Название подарка"
+        />
+
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_item_name"
         android:layout_margin="16dp"
         tools:text="Пол"
         />

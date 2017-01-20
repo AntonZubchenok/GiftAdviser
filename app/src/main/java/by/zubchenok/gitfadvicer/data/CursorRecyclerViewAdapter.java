@@ -28,10 +28,6 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
         return this.cursor;
     }
 
-    public Cursor getCursor() {
-        return this.cursor;
-    }
-
     @Override
     public final void onBindViewHolder(final VH holder, final int position) {
         final Cursor cursor = this.getItem(position);

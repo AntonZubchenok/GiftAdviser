@@ -14,6 +14,7 @@ import by.zubchenok.gitfadvicer.data.GiftContract;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_AGE_MAX;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_AGE_MIN;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_IMAGE;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_NAME;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_PRICE_MAX;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_PRICE_MIN;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_23_FEB;
@@ -35,13 +36,11 @@ public class ItemActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_item);
 
 
-
         int giftId = getIntent().getIntExtra(GiftContract.GiftEntry._ID, -1);
         Bundle bundle = new Bundle(1);
         bundle.putInt(GiftContract.GiftEntry._ID, giftId);
 
         getLoaderManager().restartLoader(0, bundle, this);
-
 
 
     }
@@ -56,6 +55,7 @@ public class ItemActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         ImageView imageView = (ImageView) findViewById(R.id.iv_item_image);
+        TextView textViewName = (TextView) findViewById(R.id.tv_item_name);
         TextView textViewSex = (TextView) findViewById(R.id.tv_sex);
         TextView textViewAge = (TextView) findViewById(R.id.tv_age);
         TextView textViewPrice = (TextView) findViewById(R.id.tv_price);
@@ -65,6 +65,7 @@ public class ItemActivity extends AppCompatActivity implements LoaderManager.Loa
         String image = data.getString(data.getColumnIndex(COLUMN_IMAGE));
         int imageId = this.getResources().getIdentifier(image, "drawable", this.getPackageName());
         imageView.setImageResource(imageId);
+        textViewName.setText(data.getString(data.getColumnIndex(COLUMN_NAME)));
 
         String sex = "";
         switch (data.getInt(data.getColumnIndex(COLUMN_SEX))) {

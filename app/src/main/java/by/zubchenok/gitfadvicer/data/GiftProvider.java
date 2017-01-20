@@ -33,7 +33,7 @@ public class GiftProvider extends ContentProvider {
         Cursor cursor;
 
         int match = sUriMatcher.match(uri);
-        switch (match){
+        switch (match) {
             case GIFTS:
                 cursor = database.query(GiftContract.GiftEntry.TABLE_NAME, projection, selection,
                         selectionArgs, null, null, sortOrder);
@@ -57,7 +57,7 @@ public class GiftProvider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
         final int match = sUriMatcher.match(uri);
-        switch (match){
+        switch (match) {
             case (GIFTS):
                 return GiftContract.GiftEntry.CONTENT_LIST_TYPE;
             case (GIFT_ID):

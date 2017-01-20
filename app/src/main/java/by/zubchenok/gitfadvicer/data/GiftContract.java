@@ -12,12 +12,14 @@ public final class GiftContract {
     public static final String CONTENT_AUTHORITY = "by.zubchenok.gitfadvicer.data.gifts";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static final String PATH_GIFTS = "gifts";
+    public static final String DB_PATH = "/data/data/by.zubchenok.gitfadvicer/databases/";
+
 
     public static final class GiftEntry implements BaseColumns {
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_GIFTS);
 
-        public static final String TABLE_NAME = "pets";
+        public static final String TABLE_NAME = "gifts";
 
         public static final String _ID = BaseColumns._ID;                                  //INTEGER
         public static final String COLUMN_NAME = "name";                                   //TEXT

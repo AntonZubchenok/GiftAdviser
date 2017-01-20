@@ -2,7 +2,7 @@ package by.zubchenok.gitfadvicer.data;
 
 import java.io.Serializable;
 
-public class Gift implements Serializable{
+public class Gift implements Serializable {
     int Id;
     private String name;
     private String holiday;

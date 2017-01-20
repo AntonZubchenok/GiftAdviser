@@ -23,7 +23,6 @@ public class GiftCursorRecyclerViewAdapter
         void onItemClicked(Cursor cursor);
     }
 
-    public static final String GIFT_EXTRA = "gift";
     private final LayoutInflater layoutInflater;
     private OnItemClickListener onItemClickListener;
 
@@ -33,11 +32,6 @@ public class GiftCursorRecyclerViewAdapter
         this.onItemClickListener = listener;
     }
 
-//    public void setOnItemClickListener(final OnItemClickListener onItemClickListener) {
-//        this.onItemClickListener = onItemClickListener;
-//    }
-
-
     @Override
     public void onBindViewHolder(GiftViewHolder holder, Cursor cursor) {
         holder.bindData(cursor, onItemClickListener);
@@ -46,28 +40,8 @@ public class GiftCursorRecyclerViewAdapter
     @Override
     public GiftViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = this.layoutInflater.inflate(R.layout.list_item, parent, false);
-//         view.setOnClickListener(this);
-//        setOnItemClickListener(this);
         return new GiftViewHolder(view);
     }
-
-//    @Override
-//    public void onClick(View view) {
-//        if (this.onItemClickListener != null)
-//        {
-//            //TODO сделать обработку нажатий
-//            Intent intent = new Intent(view.getContext(), ItemActivity.class);
-//
-//            final RecyclerView recyclerView = (RecyclerView) view.getParent();
-//            final int position = recyclerView.getChildLayoutPosition(view);
-//            if (position != RecyclerView.NO_POSITION)
-//            {
-//                final Cursor cursor = this.getItem(position);
-//                this.onItemClickListener.onItemClicked(cursor);
-//            }
-//
-//        }
-//    }
 
     public static class GiftViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_image)
@@ -98,5 +72,4 @@ public class GiftCursorRecyclerViewAdapter
             });
         }
     }
-
 }
