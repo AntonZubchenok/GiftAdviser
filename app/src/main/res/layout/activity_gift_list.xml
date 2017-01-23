@@ -9,7 +9,7 @@
     tools:context="by.zubchenok.gitfadvicer.GiftListActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
+        android:id="@+id/recyclerview_gift_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

@@ -14,11 +14,14 @@ import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.SEX_FEMALE;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.SEX_MALE;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String SEX = "sex";
-    public static final String REASON_SPINNER_POSITION = "reason spinner position";
-    public static final String AGE = "age";
-    public static final String MAX_PRICE = "max price";
 
+    //Константы для помещения и доставания данных из интента и бандла
+    public static final String EXTRA_SEX = "sex";
+    public static final String EXTRA_REASON_SPINNER_POSITION = "reason spinner position";
+    public static final String EXTRA_AGE = "age";
+    public static final String EXTRA_MAX_PRICE = "max price";
+
+    //Константы, обозначающие соответствие выбранной позиции спинера и повода
     public static final int SPINNER_POSITION_BIRTHDAY = 0;
     public static final int SPINNER_POSITION_NEW_YEAR = 1;
     public static final int SPINNER_POSITION_WEDDING = 2;
@@ -32,39 +35,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //Button handling
-        Button button = (Button) findViewById(R.id.button);
+        //Обработка нажатия кнопки "Подобрать"
+        Button button = (Button) findViewById(R.id.button_find);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //Reason
+                //Считывание выбранной позиции спиннера с поводом
                 final Spinner reasonSpinner = (Spinner) findViewById(R.id.spinner_holidays);
                 int reasonSpinnerPosition = reasonSpinner.getSelectedItemPosition();
 
-                //Sex
-                final RadioGroup sexGroup = (RadioGroup) findViewById(R.id.radioGroup);
+
+                //Считывание выбранной RadioButton с полом
+                final RadioGroup sexGroup = (RadioGroup) findViewById(R.id.radiogroup_sex);
                 int sex = SEX_ANY;
-                if (sexGroup.getCheckedRadioButtonId() == R.id.radioButton) {
+                if (sexGroup.getCheckedRadioButtonId() == R.id.radiobutton_male) {
                     sex = SEX_MALE;
-                } else if (sexGroup.getCheckedRadioButtonId() == R.id.radioButton2) {
+                } else if (sexGroup.getCheckedRadioButtonId() == R.id.radiobutton_female) {
                     sex = SEX_FEMALE;
                 }
 
-                //Age
-                final EditText ageEditText = (EditText) findViewById(R.id.editText_age);
+
+                //Считывание EditText с возрастом
+                final EditText ageEditText = (EditText) findViewById(R.id.edittext_age);
                 int age = Integer.valueOf(ageEditText.getText().toString());
 
-                //Max price
-                final EditText maxPriceEditText = (EditText) findViewById(R.id.editText_price);
+
+                //Считывание EditText с максимальной ценой
+                final EditText maxPriceEditText = (EditText) findViewById(R.id.edittext_price);
                 int maxPrice = Integer.valueOf(maxPriceEditText.getText().toString());
 
+
+                //Создание и отправка интента со считанными данными в GiftListActivity
                 Intent intent = new Intent(MainActivity.this, GiftListActivity.class);
-                intent.putExtra(REASON_SPINNER_POSITION, reasonSpinnerPosition);
-                intent.putExtra(SEX, sex);
-                intent.putExtra(AGE, age);
-                intent.putExtra(MAX_PRICE, maxPrice);
+                intent.putExtra(EXTRA_REASON_SPINNER_POSITION, reasonSpinnerPosition);
+                intent.putExtra(EXTRA_SEX, sex);
+                intent.putExtra(EXTRA_AGE, age);
+                intent.putExtra(EXTRA_MAX_PRICE, maxPrice);
                 startActivity(intent);
             }
         });

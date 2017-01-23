@@ -16,8 +16,8 @@ public class GiftProvider extends ContentProvider {
     public static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(GiftContract.CONTENT_AUTHORITY, GiftContract.PATH_GIFTS, GIFTS);
-        sUriMatcher.addURI(GiftContract.CONTENT_AUTHORITY, GiftContract.PATH_GIFTS + "/#", GIFT_ID);
+        sUriMatcher.addURI(GiftContract.CONTENT_AUTHORITY, GiftContract.DB_NAME, GIFTS);
+        sUriMatcher.addURI(GiftContract.CONTENT_AUTHORITY, GiftContract.DB_NAME + "/#", GIFT_ID);
     }
 
     @Override

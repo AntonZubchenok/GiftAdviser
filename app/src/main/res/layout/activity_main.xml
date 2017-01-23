@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:background="#CFD8DC"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="#CFD8DC"
               android:orientation="vertical">
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
@@ -18,7 +17,7 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/tw_reason"
+            android:id="@+id/text_reason"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -54,39 +53,39 @@
         android:padding="8dp">
 
         <TextView
-            android:text="Пол:"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:textStyle="normal"
+            android:id="@+id/text_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tw_sex"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:text="Пол:"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="normal"/>
 
         <RadioGroup
+            android:id="@+id/radiogroup_sex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
             android:layout_marginEnd="32dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
-            android:id="@+id/radioGroup">
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/radiobutton_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/man"/>
 
             <RadioButton
+                android:id="@+id/radiobutton_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton2"
-                android:layout_marginStart="48dp"
                 android:layout_marginLeft="48dp"
+                android:layout_marginStart="48dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/woman"/>
 
@@ -96,7 +95,6 @@
 
 
     <LinearLayout
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
@@ -104,25 +102,26 @@
         android:layout_marginTop="16dp"
         android:background="@android:color/white"
         android:elevation="2dp"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:padding="8dp">
 
         <TextView
-            android:text="Возраст:"
-            android:layout_gravity="center_horizontal"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
+            android:id="@+id/text_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tw_age"/>
+            android:layout_gravity="center_horizontal"
+            android:text="Возраст:"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
 
         <EditText
-            android:nextFocusDown="@+id/editText_price"
-            android:layout_gravity="center_horizontal"
+            android:id="@+id/edittext_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:inputType="number"
-            android:id="@+id/editText_age"/>
+            android:nextFocusDown="@+id/edittext_price"/>
 
     </LinearLayout>
 
@@ -139,61 +138,61 @@
         android:padding="8dp">
 
         <TextView
-            android:text="Стоимость:"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
+            android:id="@+id/text_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tw_price"/>
+            android:layout_gravity="center_horizontal"
+            android:text="Стоимость:"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
 
         <LinearLayout
-            android:focusableInTouchMode="true"
-            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:focusableInTouchMode="true"
             android:orientation="horizontal">
 
             <TextView
-                android:text="до"
-                android:textColor="@android:color/black"
+                android:id="@+id/text_under"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tw_under"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"/>
+                android:layout_marginRight="8dp"
+                android:text="до"
+                android:textColor="@android:color/black"/>
 
             <EditText
-                android:nextFocusDown="@+id/button"
-                android:layout_centerHorizontal="true"
+                android:id="@+id/edittext_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:inputType="number"
-                android:id="@+id/editText_price"/>
+                android:nextFocusDown="@+id/button_find"/>
 
 
             <TextView
-                android:text="BYN"
-                android:textColor="@android:color/black"
+                android:id="@+id/text_BYN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tw_BYN"
+                android:layout_marginLeft="8dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="8dp"/>
+                android:text="BYN"
+                android:textColor="@android:color/black"/>
 
         </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:height="64dp"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/colorPrimary"
-        android:elevation="4dp"
-        android:layout_gravity="center_horizontal"
-        android:text="Подобрать"
+        android:id="@+id/button_find"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:layout_marginTop="32dp"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:height="64dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="4dp"
+        android:text="Подобрать"
+        android:textColor="@android:color/white"/>
 
 </LinearLayout>

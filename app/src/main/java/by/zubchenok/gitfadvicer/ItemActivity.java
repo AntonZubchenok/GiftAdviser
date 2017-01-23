@@ -25,7 +25,7 @@ import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_VALENTINES_DAY;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_REASON_WEDDING;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_SEX;
-import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.CONTENT_URI;
+import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.TABLE_URI;
 import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry._ID;
 
 public class ItemActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -35,38 +35,43 @@ public class ItemActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
-
+        //Достаём из интента id подарка и помещаем его в Bundle, который отправится в Loader
         int giftId = getIntent().getIntExtra(GiftContract.GiftEntry._ID, -1);
         Bundle bundle = new Bundle(1);
         bundle.putInt(GiftContract.GiftEntry._ID, giftId);
 
+        //Стартуем Loader, который достанет из БД данные о выбранном подарке и отобразит их
         getLoaderManager().restartLoader(0, bundle, this);
-
-
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        //Достаём из БД данные о выбранном подарке
         String selection = "(" + _ID + "=?)";
         String[] selectionArgs = {String.valueOf(args.getInt(_ID))};
-        return new CursorLoader(this, CONTENT_URI, null, selection, selectionArgs, null);
+        return new CursorLoader(this, TABLE_URI, null, selection, selectionArgs, null);
     }
-
+  
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        ImageView imageView = (ImageView) findViewById(R.id.iv_item_image);
-        TextView textViewName = (TextView) findViewById(R.id.tv_item_name);
-        TextView textViewSex = (TextView) findViewById(R.id.tv_sex);
-        TextView textViewAge = (TextView) findViewById(R.id.tv_age);
-        TextView textViewPrice = (TextView) findViewById(R.id.tv_price);
-        TextView textViewReasons = (TextView) findViewById(R.id.tv_reasons);
-
+        ImageView imageView = (ImageView) findViewById(R.id.image_item_image);
+        TextView textViewName = (TextView) findViewById(R.id.text_item_name);
+        TextView textViewSex = (TextView) findViewById(R.id.text_sex);
+        TextView textViewAge = (TextView) findViewById(R.id.text_age);
+        TextView textViewPrice = (TextView) findViewById(R.id.text_price);
+        TextView textViewReasons = (TextView) findViewById(R.id.text_reasons);
         data.moveToFirst();
-        String image = data.getString(data.getColumnIndex(COLUMN_IMAGE));
-        int imageId = this.getResources().getIdentifier(image, "drawable", this.getPackageName());
+
+        //Отображаем изображение с подарком
+        String imageName = data.getString(data.getColumnIndex(COLUMN_IMAGE));
+        int imageId = this.getResources().getIdentifier(imageName, "drawable", this.getPackageName());
         imageView.setImageResource(imageId);
+
+        //Отображаем название подарка
         textViewName.setText(data.getString(data.getColumnIndex(COLUMN_NAME)));
 
+        //Отображаем пол, которому подходит подарок
         String sex = "";
         switch (data.getInt(data.getColumnIndex(COLUMN_SEX))) {
             case 0:
@@ -81,11 +86,16 @@ public class ItemActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         textViewSex.setText("Пол: " + sex);
 
+        //Отображаем минимальный и максимальный возраст
         textViewAge.setText("Возраст: " + data.getInt(data.getColumnIndex(COLUMN_AGE_MIN)) + "-" +
                 data.getInt(data.getColumnIndex(COLUMN_AGE_MAX)) + " лет");
+
+        //Отображаем минимальную и максимальную цену
         textViewPrice.setText("Стоимость: " + data.getInt(data.getColumnIndex(COLUMN_PRICE_MIN)) + "-" +
                 data.getInt(data.getColumnIndex(COLUMN_PRICE_MAX)) + " BYN");
 
+
+        //Отображаем поводы, к которым подходит подарок
         String reasons = "";
 
         if (data.getInt(data.getColumnIndex(COLUMN_REASON_ANY)) == 1) {
@@ -130,6 +140,5 @@ public class ItemActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
     }
 }

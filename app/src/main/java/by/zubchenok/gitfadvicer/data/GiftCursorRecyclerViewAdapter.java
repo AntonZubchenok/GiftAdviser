@@ -19,12 +19,8 @@ import static by.zubchenok.gitfadvicer.data.GiftContract.GiftEntry.COLUMN_NAME;
 public class GiftCursorRecyclerViewAdapter
         extends CursorRecyclerViewAdapter<GiftCursorRecyclerViewAdapter.GiftViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClicked(Cursor cursor);
-    }
-
     private final LayoutInflater layoutInflater;
-    private OnItemClickListener onItemClickListener;
+    private final OnItemClickListener onItemClickListener;
 
     public GiftCursorRecyclerViewAdapter(Context context, OnItemClickListener listener) {
         super();
@@ -44,11 +40,11 @@ public class GiftCursorRecyclerViewAdapter
     }
 
     public static class GiftViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_image)
-        ImageView image;
-        @BindView(R.id.tv_name)
-        TextView name;
 
+        @BindView(R.id.image_gift)
+        ImageView image;
+        @BindView(R.id.text_gift_name)
+        TextView name;
 
         public GiftViewHolder(final View itemView) {
             super(itemView);
@@ -71,5 +67,9 @@ public class GiftCursorRecyclerViewAdapter
                 }
             });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClicked(Cursor cursor);
     }
 }

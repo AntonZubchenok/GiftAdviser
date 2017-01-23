@@ -6,19 +6,14 @@ import android.provider.BaseColumns;
 
 public final class GiftContract {
 
-    private GiftContract() {
-    }
-
     public static final String CONTENT_AUTHORITY = "by.zubchenok.gitfadvicer.data.gifts";
-    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-    public static final String PATH_GIFTS = "gifts";
+    public static final Uri DB_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    public static final String DB_NAME = "gifts";
     public static final String DB_PATH = "/data/data/by.zubchenok.gitfadvicer/databases/";
-
 
     public static final class GiftEntry implements BaseColumns {
 
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_GIFTS);
-
+        public static final Uri TABLE_URI = Uri.withAppendedPath(DB_URI, DB_NAME);
         public static final String TABLE_NAME = "gifts";
 
         public static final String _ID = BaseColumns._ID;                                  //INTEGER
@@ -43,9 +38,12 @@ public final class GiftContract {
 
         //MIME types
         public static final String CONTENT_LIST_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" +
-                CONTENT_AUTHORITY + "/" + PATH_GIFTS;
+                CONTENT_AUTHORITY + "/" + DB_NAME;
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" +
-                CONTENT_AUTHORITY + "/" + PATH_GIFTS;
+                CONTENT_AUTHORITY + "/" + DB_NAME;
 
+    }
+
+    private GiftContract() {
     }
 }
